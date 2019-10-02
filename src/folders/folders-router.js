@@ -65,7 +65,7 @@ foldersRouter
       .catch(next)
   })
   .get((req, res, next) => {
-    res.json(serializeArticle(res.article))
+    res.json(serializeFolder(res.article))
   })
   .delete((req, res, next) => {
     FoldersService.deleteArticle(
@@ -79,8 +79,8 @@ foldersRouter
   })
 
    .patch(jsonParser, (req, res, next) => {
-       const { title, content, style } = req.body
-       const folderToUpdate = { title, content, style }
+       const { name,foldename } = req.body
+       const folderToUpdate = { name,foldename }
     
 
        const numberOfValues = Object.values(folderToUpdate).filter(Boolean).length

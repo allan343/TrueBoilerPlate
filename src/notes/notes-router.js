@@ -7,9 +7,9 @@ const jsonParser = express.json()
 
 const serializeNote = note => ({
   id: note.id,
-  name: note.style,
+  name: note.name,
   content: note.content,
-  modified: note.date_published,
+  modified: note.modified,
   folderId: note.folderid,
 })
 
@@ -66,12 +66,12 @@ notesRouter
       .catch(next)
   })
   .get((req, res, next) => {
-    res.json(serializeArticle(res.article))
+    res.json(serializeNote(res.note))
   })
   .delete((req, res, next) => {
-    NotessService.deleteNote(
+    NotesService.deleteNote(
       req.app.get('db'),
-      req.params.article_id
+      req.params.note_id
     )
       .then(numRowsAffected => {
         res.status(204).end()
@@ -80,9 +80,10 @@ notesRouter
   })
 
    .patch(jsonParser, (req, res, next) => {
-       const { title, content, style } = req.body
-       const noteToUpdate = { title, content, style }
-    
+      
+       const noteToUpdate = {name, content, folderid  }
+       const { content, name, folderid } = req.body
+      
 
        const numberOfValues = Object.values(noteToUpdate).filter(Boolean).length
           if (numberOfValues === 0) {
