@@ -65,12 +65,12 @@ foldersRouter
       .catch(next)
   })
   .get((req, res, next) => {
-    res.json(serializeFolder(res.article))
+    res.json(serializeFolder(res.folder))
   })
   .delete((req, res, next) => {
-    FoldersService.deleteArticle(
+    FoldersService.deleteFolder(
       req.app.get('db'),
-      req.params.article_id
+      req.params.folder_id
     )
       .then(numRowsAffected => {
         res.status(204).end()
@@ -79,8 +79,8 @@ foldersRouter
   })
 
    .patch(jsonParser, (req, res, next) => {
-       const { name,foldename } = req.body
-       const folderToUpdate = { name,foldename }
+       const { foldename } = req.body
+       const folderToUpdate = { foldename }
     
 
        const numberOfValues = Object.values(folderToUpdate).filter(Boolean).length
@@ -92,9 +92,9 @@ foldersRouter
             })
           }
     
-       FoldersService.updateArticle(
+       FoldersService.updateFolder(
          req.app.get('db'),
-         req.params.article_id,
+         req.params.folder_id,
          folderToUpdate
        )
          .then(numRowsAffected => {

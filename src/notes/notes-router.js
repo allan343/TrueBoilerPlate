@@ -81,9 +81,9 @@ notesRouter
 
    .patch(jsonParser, (req, res, next) => {
       
-       const noteToUpdate = {name, content, folderid  }
+       
        const { content, name, folderid } = req.body
-      
+       const noteToUpdate = {name, content, folderid  }
 
        const numberOfValues = Object.values(noteToUpdate).filter(Boolean).length
           if (numberOfValues === 0) {
@@ -96,7 +96,7 @@ notesRouter
     
        NotesService.updateNote(
          req.app.get('db'),
-         req.params.article_id,
+         req.params.note_id,
          noteToUpdate
        )
          .then(numRowsAffected => {
